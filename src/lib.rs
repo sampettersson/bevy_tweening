@@ -566,7 +566,7 @@ mod tests {
 
     impl Lens<DummyComponent> for DummyLens {
         fn lerp(&mut self, target: &mut DummyComponent, ratio: f32) {
-            target.value = self.start.lerp(&self.end, &ratio);
+            target.value = self.start.lerp(self.end, ratio);
         }
     }
 
