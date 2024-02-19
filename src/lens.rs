@@ -332,13 +332,21 @@ pub struct UiBackgroundColorLens {
     pub end: Color,
 }
 
+fn color_to_vec(color: Color) -> Vec4 {
+    Vec4::new(color.r(), color.g(), color.b(), color.a())
+}
+
+fn vec_to_color(vec: Vec4) -> Color {
+    Color::rgba(vec.x, vec.y, vec.z, vec.w)
+}
+
 #[cfg(feature = "bevy_ui")]
 impl Lens<BackgroundColor> for UiBackgroundColorLens {
     fn lerp(&mut self, target: &mut BackgroundColor, ratio: f32) {
-        let start: Vec4 = self.start.into();
-        let end: Vec4 = self.end.into();
+        let start: Vec4 = color_to_vec(self.start);
+        let end: Vec4 = color_to_vec(self.end);
         let value = start.lerp(end, ratio);
-        target.0 = value.into();
+        target.0 = vec_to_color(value);
     }
 }
 
@@ -360,10 +368,10 @@ impl Lens<ColorMaterial> for ColorMaterialColorLens {
     fn lerp(&mut self, target: &mut ColorMaterial, ratio: f32) {
         // Note: Add<f32> for Color affects alpha, but not Mul<f32>. So use Vec4 for
         // consistency.
-        let start: Vec4 = self.start.into();
-        let end: Vec4 = self.end.into();
+        let start: Vec4 = color_to_vec(self.start);
+        let end: Vec4 = color_to_vec(self.end);
         let value = start.lerp(end, ratio);
-        target.color = value.into();
+        target.color = vec_to_color(value);
     }
 }
 
@@ -385,10 +393,10 @@ impl Lens<Sprite> for SpriteColorLens {
     fn lerp(&mut self, target: &mut Sprite, ratio: f32) {
         // Note: Add<f32> for Color affects alpha, but not Mul<f32>. So use Vec4 for
         // consistency.
-        let start: Vec4 = self.start.into();
-        let end: Vec4 = self.end.into();
+        let start: Vec4 = color_to_vec(self.start);
+        let end: Vec4 = color_to_vec(self.end);
         let value = start.lerp(end, ratio);
-        target.color = value.into();
+        target.color = vec_to_color(value);
     }
 }
 
