@@ -542,7 +542,7 @@ impl<T: Asset> AssetAnimator<T> {
 #[cfg(test)]
 mod tests {
     #[cfg(feature = "bevy_asset")]
-    use bevy::reflect::TypeUuid;
+    use bevy::reflect::TypePath;
 
     use super::*;
     use crate::test_utils::*;
@@ -558,8 +558,7 @@ mod tests {
     }
 
     #[cfg(feature = "bevy_asset")]
-    #[derive(Asset, Debug, Default, Reflect, TypeUuid)]
-    #[uuid = "a33abc11-264e-4bbb-82e8-b87226bb4383"]
+    #[derive(Asset, Debug, Default, TypePath)]
     struct DummyAsset {
         value: f32,
     }
@@ -583,7 +582,7 @@ mod tests {
     #[cfg(feature = "bevy_asset")]
     impl Lens<DummyAsset> for DummyLens {
         fn lerp(&mut self, target: &mut DummyAsset, ratio: f32) {
-            target.value = self.start.lerp(&self.end, &ratio);
+            target.value = self.start.lerp(self.end, ratio);
         }
     }
 

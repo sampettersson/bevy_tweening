@@ -95,12 +95,12 @@ impl Lens<Text> for TextColorLens {
     fn lerp(&mut self, target: &mut Text, ratio: f32) {
         // Note: Add<f32> for Color affects alpha, but not Mul<f32>. So use Vec4 for
         // consistency.
-        let start: Vec4 = self.start.into();
-        let end: Vec4 = self.end.into();
+        let start: Vec4 = color_to_vec(self.start);
+        let end: Vec4 = color_to_vec(self.end);
         let value = start.lerp(end, ratio);
 
         if let Some(section) = target.sections.get_mut(self.section) {
-            section.style.color = value.into();
+            section.style.color = vec_to_color(value);
         }
     }
 }
