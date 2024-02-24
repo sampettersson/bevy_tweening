@@ -90,6 +90,7 @@ pub fn component_animator_system<T: Component>(
     time: Res<Time>,
     mut query: Query<(Entity, &mut T, &mut Animator<T>)>,
     events: ResMut<Events<TweenCompleted>>,
+    mut redraw: EventWriter<RequestRedraw>
 ) {
     let mut events: Mut<Events<TweenCompleted>> = events.into();
     for (entity, target, mut animator) in query.iter_mut() {
@@ -102,6 +103,7 @@ pub fn component_animator_system<T: Component>(
                 entity,
                 &mut events,
             );
+            redraw.send(RequestRedraw);
         }
     }
 }
