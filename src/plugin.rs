@@ -1,6 +1,6 @@
 #[cfg(feature = "bevy_asset")]
 use bevy::asset::Asset;
-use bevy::{ecs::component::Component, prelude::*};
+use bevy::{ecs::component::Component, prelude::*, window::RequestRedraw};
 
 #[cfg(feature = "bevy_asset")]
 use crate::{tweenable::AssetTarget, AssetAnimator};
